@@ -6,7 +6,7 @@ const { authenticate, authorize } = require('../middleware/auth');
 
 const router = express.Router();
 router.use(authenticate);
-router.use(authorize('super_admin'));
+router.use(authorize('admin'));
 
 router.get('/', async (req, res) => {
   try {
