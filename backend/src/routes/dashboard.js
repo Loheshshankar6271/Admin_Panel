@@ -26,7 +26,7 @@ router.get('/summary', async (req, res) => {
       recentOrders: recentOrders.rows,
     };
 
-    if (req.user.role === 'super_admin') {
+    if (req.user.role === 'admin') {
       const [totalUsers, activeUsers] = await Promise.all([
         pool.query('SELECT COUNT(*) as count FROM users'),
         pool.query('SELECT COUNT(*) as count FROM users WHERE is_active = true'),

@@ -67,8 +67,8 @@ router.post('/', async (req, res) => {
   } catch (err) { console.error(err); res.status(500).json({ error: err.message }); }
 });
 
-// Manager + Super Admin can edit
-router.put('/:id', authorize('manager', 'super_admin'), async (req, res) => {
+// Manager + Admin can edit
+router.put('/:id', authorize('manager', 'admin'), async (req, res) => {
   try {
     const { customer_name, customer_email, status, total_amount, notes } = req.body;
     const now = new Date();
@@ -88,8 +88,8 @@ router.put('/:id', authorize('manager', 'super_admin'), async (req, res) => {
   } catch (err) { console.error(err); res.status(500).json({ error: err.message }); }
 });
 
-// Only Super Admin can delete
-router.delete('/:id', authorize('super_admin'), async (req, res) => {
+// Only Admin can delete
+router.delete('/:id', authorize('admin'), async (req, res) => {
   try {
     const result = await pool.query('DELETE FROM orders WHERE id = $1 RETURNING id', [req.params.id]);
     if (!result.rows[0]) return res.status(404).json({ error: 'Order not found.' });
