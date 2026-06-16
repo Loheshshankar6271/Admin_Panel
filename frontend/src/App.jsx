@@ -12,7 +12,7 @@ import ReportsPage from './pages/ReportsPage';
 import AccessDenied from './pages/AccessDenied';
 
 const ROLE_HOME = {
-  super_admin: '/dashboard/admin',
+  admin: '/dashboard/admin',
   manager: '/dashboard/manager',
   staff: '/dashboard/staff',
 };
