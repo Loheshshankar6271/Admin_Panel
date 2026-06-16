@@ -1,22 +1,22 @@
-import { NavLink, useNavigate } from 'react-router-dom';
+﻿import { NavLink, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, ShoppingCart, Users, BarChart3, LogOut, X, Zap } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import toast from 'react-hot-toast';
 
-const ROLE_HOME  = { super_admin: '/dashboard/admin', manager: '/dashboard/manager', staff: '/dashboard/staff' };
-const PANEL_LABEL = { super_admin: 'Admin Panel', manager: 'Manager Panel', staff: 'Staff Panel' };
-const ROLE_LABEL  = { super_admin: 'Super Admin', manager: 'Manager', staff: 'Staff' };
-const ROLE_COLOR  = { super_admin: 'badge-super_admin', manager: 'badge-manager', staff: 'badge-staff' };
+const ROLE_HOME  = { admin: '/dashboard/admin', manager: '/dashboard/manager', staff: '/dashboard/staff' };
+const PANEL_LABEL = { admin: 'Admin Panel', manager: 'Manager Panel', staff: 'Staff Panel' };
+const ROLE_LABEL  = { admin: 'Super Admin', manager: 'Manager', staff: 'Staff' };
+const ROLE_COLOR  = { admin: 'badge-super_admin', manager: 'badge-manager', staff: 'badge-staff' };
 
 export default function Sidebar({ onClose }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const NAV = [
-    { to: ROLE_HOME[user?.role] || '/dashboard/staff', icon: LayoutDashboard, label: 'Dashboard', roles: ['super_admin','manager','staff'] },
-    { to: '/users',   icon: Users,        label: 'Users',   roles: ['super_admin'] },
-    { to: '/orders',  icon: ShoppingCart, label: 'Orders',  roles: ['super_admin','manager','staff'] },
-    { to: '/reports', icon: BarChart3,    label: 'Reports', roles: ['super_admin','manager'] },
+    { to: ROLE_HOME[user?.role] || '/dashboard/staff', icon: LayoutDashboard, label: 'Dashboard', roles: ['admin','manager','staff'] },
+    { to: '/users',   icon: Users,        label: 'Users',   roles: ['admin'] },
+    { to: '/orders',  icon: ShoppingCart, label: 'Orders',  roles: ['admin','manager','staff'] },
+    { to: '/reports', icon: BarChart3,    label: 'Reports', roles: ['admin','manager'] },
   ].filter(n => n.roles.includes(user?.role));
 
   const handleLogout = () => { logout(); toast.success('Signed out'); navigate('/login'); };
