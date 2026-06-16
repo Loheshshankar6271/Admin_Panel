@@ -1,4 +1,4 @@
-const express = require('express');
+﻿const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
@@ -14,22 +14,35 @@ const app = express();
 app.set('trust proxy', 1);
 
 app.use(helmet());
-// Support a comma-separated list of allowed origins via CLIENT_URL,
+
+// Support a comma-separated list of allowed exact origins via CLIENT_URL,
 // e.g. "https://your-app.vercel.app,http://localhost:5173"
 const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:5173')
   .split(',')
   .map((o) => o.trim());
 
+// Also allow any Vercel preview deployment URL (*.vercel.app)
+const vercelPreviewRegex = /^https:\/\/.*\.vercel\.app$/;
+
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
+    console.log('REQUEST ORIGIN:', origin);
+    console.log('ALLOWED ORIGINS:', allowedOrigins);
+
+    if (
+      !origin ||
+      allowedOrigins.includes(origin) ||
+      vercelPreviewRegex.test(origin)
+    ) {
       callback(null, true);
     } else {
+      console.log('BLOCKED ORIGIN:', origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
   credentials: true,
 }));
+
 app.use(morgan('dev'));
 app.use(express.json());
 
