@@ -34,7 +34,7 @@ export function AuthProvider({ children }) {
   const can = (action) => {
     if (!user) return false;
     const permissions = {
-      super_admin: ['view_users', 'manage_users', 'view_orders', 'edit_orders', 'delete_orders', 'view_reports', 'view_settings'],
+      admin: ['view_users', 'manage_users', 'view_orders', 'edit_orders', 'delete_orders', 'view_reports', 'view_settings'],
       manager: ['view_orders', 'edit_orders', 'view_reports'],
       staff: ['view_orders'],
     };
